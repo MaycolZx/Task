@@ -1,0 +1,86 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>DBP</title>
+  <script>
+    function delall() {
+      ol = document.querySelector('#Tasks');
+      while (ol.firstChild) {
+        ol.removeChild();
+      }
+
+    }
+    function deleteTask(button) {
+      li = button.parentElement;
+      li.remove();
+    }
+
+    function addTask() {
+
+      const li = document.createElement("li");
+      const button = document.createElement("button");
+      const input = document.createElement("input");
+
+      button.innerHTML = "x";
+      button.setAttribute("onclick", "deleteTask(this)");
+      input.setAttribute("type", "checkbox");
+      input.setAttribute("onchange","tachar(this)")
+
+      li.appendChild(input);
+      li.append(document.querySelector('#task').value);
+
+      li.appendChild(button);
+      document.querySelector('#Tasks').append(li);
+      document.querySelector('#task').value = "";
+
+      return false;
+    }
+
+    function tachar(cb) {
+      if (cb.checked) {
+        const del = document.createElement("del");
+        cb_text = cb.nextSibling;
+        del.appendChild(cb_text);
+        cb.after(del);
+      }
+      else {
+        del = cb.nextSibling;
+        cb.setAttribute("style","del")
+        // del.remove()
+        cb.after(cb_text);
+      }
+      return false;
+    }
+
+    function completeAll() {
+      CONTAINER.innerHTML = EMPTY;
+      Storage.todo
+    }
+  </script>
+</head>
+
+<body>
+  <h1>Tasks</h1>
+
+
+
+<form id="newtask">
+  <input id="task" autocomplete="off" placeholder="New Tasks" type="text">
+  <input type="button" onclick="addTask()" value="envia">
+</form>
+    <br>
+      <button type="button" onclick="delall()">Delete All</button>
+      <button type="button" onclick="delall()">Complete All</button>
+
+    <ol id="Tasks">
+      <li>
+        <input type="checkbox" onchange="tachar(this)">Tarea Numero 1<button type="button" onclick="deleteTask(this)">x</button>
+      </li>
+    </ol>
+</body>
+
+</html>
